@@ -50,8 +50,8 @@ pub fn store_blob(tenet_dir: &Path, content: &[u8]) -> Result<String> {
     fs::create_dir_all(&objects_dir)
         .context("Failed to create objects directory")?;
 
-    // Write blob atomically to prevent corruption
-    utils::atomic_write(&blob_path, content)
+    // Write blob directly (bypassing atomic_write to avoid OneDrive rename bugs on .tmp files)
+    fs::write(&blob_path, content)
         .with_context(|| format!("Failed to store blob: {}", hash))?;
 
     Ok(hash)
