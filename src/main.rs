@@ -198,9 +198,13 @@ fn cmd_restore(target: &str, dry_run: bool) -> Result<()> {
     // Parse the timestamp
     let timestamp = utils::parse_timestamp(&time_str)?;
 
-    // Determine paths — try to find .tenet from current directory
-    let current_dir = std::env::current_dir()?;
-    let tenet_dir = utils::find_tenet_dir(&current_dir)
+    // Resolve the file path to find tenet dir
+    let file_path = Path::new(&file_str)
+        .canonicalize()
+        .unwrap_or_else(|_| std::env::current_dir().unwrap().join(&file_str));
+
+    // Determine paths — try to find .tenet from the target file's path
+    let tenet_dir = utils::find_tenet_dir(&file_path)
         .context("Not in a TENET-tracked directory. Run 'tenet watch <dir>' first.")?;
 
     let watched_dir = tenet_dir
@@ -211,9 +215,11 @@ fn cmd_restore(target: &str, dry_run: bool) -> Result<()> {
     let watched_dir_str = watched_dir.to_string_lossy().to_string();
     let metadata = MetadataIndex::load(&tenet_dir, &watched_dir_str)?;
 
-    // Normalize the file path (forward slashes)
-    let rel_path = file_str.replace('\\', "/");
-
+    // Get relative path for lookup
+    let rel_path = utils::relative_path(&file_path, watched_dir)
+        .or_else(|_| {
+            Ok::<String, anyhow::Error>(file_str.replace('\\', "/"))
+        })?;
     if dry_run {
         // Preview mode
         println!();
