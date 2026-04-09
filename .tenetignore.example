@@ -1,0 +1,38 @@
+# TENET Ignore File
+# Syntax is similar to .gitignore
+# Lines starting with # are comments
+# One pattern per line
+
+# Version control
+.git/
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+target/
+dist/
+build/
+out/
+
+# IDE / Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files (may contain secrets)
+# .env
