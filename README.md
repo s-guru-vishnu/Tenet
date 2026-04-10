@@ -15,19 +15,29 @@ A high-performance, systems-level file versioning tool built in Rust. TENET auto
 - **🔒 Crash-Safe** — Atomic writes prevent data corruption
 - **⚡ High Performance** — Async I/O with Tokio, debounced events, efficient batching
 
-## Installation
+## Installation & Usage
 
-### Prerequisites
-- [Rust](https://rustup.rs/) (1.70+)
+TENET operates in **Dual-Mode**: It features a rich **Desktop GUI** alongside a powerful **Command-Line Interface (CLI)**.
 
-### Build from Source
+### 1. Desktop GUI
+To run the Desktop application locally for development:
 ```bash
-git clone https://github.com/yourusername/tenet.git
-cd tenet
-cargo build --release
+npm install
+npm run tauri dev
 ```
 
-The binary will be at `target/release/tenet` (or `tenet.exe` on Windows).
+To build a standalone executable for the Desktop application:
+```bash
+npm run tauri build
+```
+
+### 2. Global CLI Installation
+To use TENET from your terminal across any directory in your system, install the core Rust binary globally:
+```bash
+cargo install --path src-tauri
+```
+
+Once installed globally, you can invoke the UI from anywhere by simply typing `tenet`, or use the CLI commands (e.g., `tenet watch .`)!
 
 ## Quick Start
 

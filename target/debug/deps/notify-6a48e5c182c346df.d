@@ -1,0 +1,12 @@
+C:\Users\guruv\OneDrive\Desktop\Tenet\target\debug\deps\notify-6a48e5c182c346df.d: C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\lib.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\windows.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\null.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\poll.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\config.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\error.rs
+
+C:\Users\guruv\OneDrive\Desktop\Tenet\target\debug\deps\libnotify-6a48e5c182c346df.rlib: C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\lib.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\windows.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\null.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\poll.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\config.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\error.rs
+
+C:\Users\guruv\OneDrive\Desktop\Tenet\target\debug\deps\libnotify-6a48e5c182c346df.rmeta: C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\lib.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\windows.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\null.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\poll.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\config.rs C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\error.rs
+
+C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\lib.rs:
+C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\windows.rs:
+C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\null.rs:
+C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\poll.rs:
+C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\config.rs:
+C:\Users\guruv\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\notify-7.0.0\src\error.rs:
