@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { motion } from 'framer-motion';
 import { useAppStore, type FileEntry } from '../store/useAppStore';
-import { Search, File as FileIcon, Clock, RefreshCcw, SplitSquareHorizontal, AlertTriangle } from 'lucide-react';
+import { Search, File as FileIcon, Clock, RefreshCcw, SplitSquareHorizontal } from 'lucide-react';
 import DiffViewer from './DiffViewer';
 
 function DiffContainer({ filePath, hash, onClose }: { filePath: string, hash: string, onClose: () => void }) {
