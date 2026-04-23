@@ -177,15 +177,19 @@ pub fn restore_file(
         );
     }
 
+    // Find the version index for the message
+    let version_index = metadata.files.get(rel_path)
+        .and_then(|entry| entry.versions.iter().position(|v| v.timestamp == version.timestamp))
+        .map(|idx| idx + 1)
+        .unwrap_or(0);
+
     // Use the snapshot strategy to restore
     let strategy = SnapshotStrategy;
     strategy.restore_version(rel_path, &version.hash, watched_dir, tenet_dir)?;
 
     Ok(format!(
-        "Restored '{}' to version from {} (hash: {}..)",
-        rel_path,
-        utils::format_timestamp(&version.timestamp),
-        &version.hash[..12]
+        "Restored '{}' to v{}",
+        rel_path, version_index
     ))
 }
 

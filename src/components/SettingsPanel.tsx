@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { motion } from 'framer-motion';
-import { Save, AlertCircle } from 'lucide-react';
+import { Save, Settings } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 
 export default function SettingsPanel() {
-  const { currentPath } = useAppStore();
+  const { currentPath, addNotification } = useAppStore();
   const [ignoreRules, setIgnoreRules] = useState('');
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     if (!currentPath) return;
@@ -18,23 +16,19 @@ export default function SettingsPanel() {
     invoke('get_ignore_rules', { path: currentPath })
       .then((res) => {
         setIgnoreRules(res as string);
-        setErrorMsg('');
       })
-      .catch((e: any) => setErrorMsg(e.toString()))
+      .catch((e: any) => addNotification('error', `Failed to load settings: ${e.toString()}`))
       .finally(() => setLoading(false));
   }, [currentPath]);
 
   const handleSave = async () => {
     if (!currentPath) return;
     setSaving(true);
-    setSuccess(false);
-    setErrorMsg('');
     try {
       await invoke('save_ignore_rules', { path: currentPath, rules: ignoreRules });
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 3000);
+      addNotification('success', 'Settings saved successfully!');
     } catch (e: any) {
-      setErrorMsg(e.toString());
+      addNotification('error', `Failed to save settings: ${e.toString()}`);
     } finally {
       setSaving(false);
     }
@@ -42,58 +36,73 @@ export default function SettingsPanel() {
 
   if (!currentPath) {
     return (
-      <div className="flex-1 flex flex-col pt-8">
-        <div className="px-10 py-8">
-            <h2 className="text-3xl font-semibold mb-2">Settings</h2>
-            <p className="text-text-muted">Select a directory in the Dashboard to edit its settings.</p>
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="text-center">
+          <Settings size={40} className="text-text-muted/30 mx-auto mb-3" />
+          <p className="text-text-muted text-sm">Watch a directory from the Dashboard to configure settings.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col pt-8">
-      <div className="px-10 mb-8">
-        <h2 className="text-3xl font-semibold mb-2">Settings</h2>
-        <p className="text-text-muted">Manage configuration for {currentPath}</p>
+    <div className="flex-1 flex flex-col min-h-0">
+      <div className="px-4 sm:px-6 lg:px-8 py-5">
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-1">Settings</h2>
+        <p className="text-text-muted text-sm truncate">
+          Configuration for <span className="text-text-main font-medium">{currentPath.split(/[/\\]/).pop()}</span>
+        </p>
       </div>
 
-      <div className="px-10 pb-10 flex-1 overflow-auto">
+      <div className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 pb-8">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-panel p-8 rounded-2xl max-w-3xl"
+          className="glass-panel p-4 sm:p-6 lg:p-8 rounded-2xl max-w-3xl"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <h3 className="text-xl font-medium">Ignore Rules (.tenetignore)</h3>
+          <div className="flex items-center gap-3 mb-3">
+            <h3 className="text-lg font-medium">Ignore Rules</h3>
+            <span className="text-xs text-text-muted bg-surface px-2 py-0.5 rounded-md font-mono">.tenetignore</span>
           </div>
-          <p className="text-text-muted text-sm mb-6">
-            Specify files and directories that TENET should completely ignore. Uses standard glob patterns (e.g. <code>*.log</code>, <code>node_modules/</code>).
+          <p className="text-text-muted text-sm mb-5">
+            Specify files and directories that TENET should completely ignore. Uses standard glob patterns (e.g. <code className="bg-surface px-1.5 py-0.5 rounded text-xs">*.log</code>, <code className="bg-surface px-1.5 py-0.5 rounded text-xs">node_modules/</code>).
           </p>
 
           {loading ? (
-            <div className="animate-pulse flex space-x-4 bg-surface h-32 rounded-xl"></div>
+            <div className="flex items-center gap-3 p-6 text-text-muted text-sm">
+              <span className="h-4 w-4 border-2 border-brand-400/30 border-t-brand-400 rounded-full animate-spin" />
+              Loading configuration...
+            </div>
           ) : (
             <div className="flex flex-col gap-4">
               <textarea
                 value={ignoreRules}
                 onChange={(e) => setIgnoreRules(e.target.value)}
-                className="w-full bg-surface border border-border rounded-xl p-4 min-h-[200px] outline-none focus:border-brand-500 font-mono text-sm transition-colors"
-                placeholder="# Add paths to ignore..."
+                className="w-full bg-surface border border-border rounded-xl p-3 sm:p-4 min-h-[180px] sm:min-h-[220px] outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/30 font-mono text-sm transition-all resize-y placeholder:text-text-muted/50"
+                placeholder="# Add paths to ignore...
+node_modules/
+*.log
+dist/
+.env"
               />
               
-              <div className="flex justify-between items-center">
-                <div className="flex flex-col">
-                    {success && <span className="text-emerald-400 text-sm font-medium">Saved successfully!</span>}
-                    {errorMsg && <span className="text-red-400 text-sm font-medium flex items-center gap-1"><AlertCircle size={14}/> {errorMsg}</span>}
-                </div>
+              <div className="flex justify-end">
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className="bg-brand-600 hover:bg-brand-500 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center gap-2 shadow-lg shadow-brand-500/20 disabled:opacity-50"
+                  className="bg-brand-600 hover:bg-brand-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-all flex items-center gap-2 shadow-lg shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
                 >
-                  <Save size={18} />
-                  {saving ? 'Saving...' : 'Save Settings'}
+                  {saving ? (
+                    <>
+                      <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Save size={16} />
+                      Save Settings
+                    </>
+                  )}
                 </button>
               </div>
             </div>
