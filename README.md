@@ -1,19 +1,19 @@
-# TENET — Time-Travel File System ⏳
+# TENET - Time-Travel File System ⏳
 
 A high-performance, systems-level file versioning tool built in Rust. TENET automatically tracks file changes in user-specified directories and allows restoring files to any previous state.
 
 > *"What's happened, happened. Which is an expression of faith in the mechanics of the world."*
-> — TENET
+> - TENET
 
 ## Features
 
-- **🔍 Real-time File Watching** — Monitor directories for changes using OS-level file system events
-- **📸 Automatic Versioning** — Every file change is automatically captured and stored
-- **⏪ Time Travel Restore** — Restore any file to any previous point in time
-- **🧹 Smart Filtering** — `.tenetignore` support (like `.gitignore`) to skip unwanted files
-- **💾 Content-Addressable Storage** — Deduplication via SHA-256 hashing
-- **🔒 Crash-Safe** — Atomic writes prevent data corruption
-- **⚡ High Performance** — Async I/O with Tokio, debounced events, efficient batching
+- **🔍 Real-time File Watching** - Monitor directories for changes using OS-level file system events
+- **📸 Automatic Versioning** - Every file change is automatically captured and stored
+- **⏪ Time Travel Restore** - Restore any file to any previous point in time
+- **🧹 Smart Filtering** - `.tenetignore` support (like `.gitignore`) to skip unwanted files
+- **💾 Content-Addressable Storage** - Deduplication via SHA-256 hashing
+- **🔒 Crash-Safe** - Atomic writes prevent data corruption
+- **⚡ High Performance** - Async I/O with Tokio, debounced events, efficient batching
 
 ## Installation & Usage
 
@@ -156,4 +156,4 @@ src/
 
 ## License
 
-MIT License — see [LICENSE](LICENSE)
+MIT License - see [LICENSE](LICENSE)

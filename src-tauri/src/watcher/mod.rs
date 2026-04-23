@@ -211,7 +211,7 @@ fn process_event_loop(
                 eprintln!("{}", format!("⚠️  Watcher error: {:?}", e).red());
             }
             Err(_) => {
-                // Channel closed — watcher was dropped
+                // Channel closed - watcher was dropped
                 break;
             }
         }
@@ -229,7 +229,7 @@ fn print_banner(watched_dir: &Path) {
     );
     println!(
         "{}",
-        "║         ⏳ TENET — Time-Travel FS ⏳         ║".bright_cyan()
+        "║         ⏳ TENET - Time-Travel FS ⏳         ║".bright_cyan()
     );
     println!(
         "{}",

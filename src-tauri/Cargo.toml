@@ -2,7 +2,7 @@
 name = "tenet"
 version = "0.1.0"
 edition = "2021"
-description = "TENET — Time-Travel File System. Track file changes and restore any previous version."
+description = "TENET - Time-Travel File System. Track file changes and restore any previous version."
 authors = ["S Guru Vishnu"]
 license = "MIT"
 

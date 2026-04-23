@@ -87,7 +87,7 @@ pub async fn get_history(file: String) -> ApiResult<crate::metadata::FileEntry> 
         .unwrap_or_else(|_| PathBuf::from(&file));
 
     let tenet_dir =
-        utils::find_tenet_dir(&file_path).context("Not in a TENET-tracked directory.")?;
+        utils::find_tenet_dir(&file_path).context("Not in a TENEt - tracked directory.")?;
 
     let watched_dir = tenet_dir.parent().context("Invalid .tenet structure")?;
     let watched_dir_str = watched_dir.to_string_lossy().to_string();
@@ -112,7 +112,7 @@ pub async fn restore_version(file: String, timestamp: String) -> ApiResult<Strin
         .unwrap_or_else(|_| PathBuf::from(&file));
 
     let tenet_dir =
-        utils::find_tenet_dir(&file_path).context("Not in a TENET-tracked directory.")?;
+        utils::find_tenet_dir(&file_path).context("Not in a TENEt - tracked directory.")?;
 
     let watched_dir = tenet_dir.parent().context("Invalid .tenet structure")?;
     let watched_dir_str = watched_dir.to_string_lossy().to_string();
@@ -162,7 +162,7 @@ pub async fn get_file_content(path: String, hash: Option<String>) -> ApiResult<S
         }
 
         let tenet_dir =
-            utils::find_tenet_dir(&current_dir).context("Not in a TENET-tracked directory.")?;
+            utils::find_tenet_dir(&current_dir).context("Not in a TENEt - tracked directory.")?;
 
         let content_bytes = storage::read_blob(&tenet_dir, &h)?;
         let content = String::from_utf8(content_bytes)
@@ -206,7 +206,7 @@ pub async fn get_ignore_rules(path: String) -> ApiResult<String> {
 pub async fn save_ignore_rules(path: String, rules: String) -> ApiResult<()> {
     let current_dir = PathBuf::from(&path);
     let tenet_dir =
-        utils::find_tenet_dir(&current_dir).context("Not in a TENET-tracked directory.")?;
+        utils::find_tenet_dir(&current_dir).context("Not in a TENEt - tracked directory.")?;
 
     let watched_dir = tenet_dir
         .parent()

@@ -140,9 +140,9 @@ impl IgnoreRules {
 /// Represents a processed file event ready for versioning.
 #[derive(Debug)]
 pub enum ProcessedEvent {
-    /// A file was created or modified — store a new version
+    /// A file was created or modified - store a new version
     CreateOrModify(PathBuf),
-    /// A file was deleted — record deletion marker
+    /// A file was deleted - record deletion marker
     Delete(PathBuf),
 }
 
@@ -173,7 +173,7 @@ pub fn process_events(
     let mut processed_count = 0;
 
     for path in paths {
-        // Skip directories — we only version files
+        // Skip directories - we only version files
         if path.is_dir() {
             continue;
         }
@@ -226,7 +226,7 @@ fn process_file_change(
     // Check if content has actually changed (deduplication at metadata level)
     if let Some(latest) = metadata.get_latest_version(&rel_path) {
         if latest.hash == hash {
-            // Content unchanged — skip
+            // Content unchanged - skip
             return Ok(());
         }
     }

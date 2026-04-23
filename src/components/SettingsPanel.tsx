@@ -38,8 +38,8 @@ export default function SettingsPanel() {
     return (
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="text-center">
-          <Settings size={40} className="text-text-muted/30 mx-auto mb-3" />
-          <p className="text-text-muted text-sm">Watch a directory from the Dashboard to configure settings.</p>
+          <Settings size={40} className="text - text-muted/30 mx-auto mb-3" />
+          <p className="text - text-muted text-sm">Watch a directory from the Dashboard to configure settings.</p>
         </div>
       </div>
     );
@@ -49,27 +49,27 @@ export default function SettingsPanel() {
     <div className="flex-1 flex flex-col min-h-0">
       <div className="px-4 sm:px-6 lg:px-8 py-5">
         <h2 className="text-2xl sm:text-3xl font-semibold mb-1">Settings</h2>
-        <p className="text-text-muted text-sm truncate">
-          Configuration for <span className="text-text-main font-medium">{currentPath.split(/[/\\]/).pop()}</span>
+        <p className="text - text-muted text-sm truncate">
+          Configuration for <span className="text - text-main font-medium">{currentPath.split(/[/\\]/).pop()}</span>
         </p>
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="glass-panel p-4 sm:p-6 lg:p-8 rounded-2xl max-w-3xl"
         >
           <div className="flex items-center gap-3 mb-3">
             <h3 className="text-lg font-medium">Ignore Rules</h3>
-            <span className="text-xs text-text-muted bg-surface px-2 py-0.5 rounded-md font-mono">.tenetignore</span>
+            <span className="text-xs text - text-muted bg-surface px-2 py-0.5 rounded-md font-mono">.tenetignore</span>
           </div>
-          <p className="text-text-muted text-sm mb-5">
+          <p className="text - text-muted text-sm mb-5">
             Specify files and directories that TENET should completely ignore. Uses standard glob patterns (e.g. <code className="bg-surface px-1.5 py-0.5 rounded text-xs">*.log</code>, <code className="bg-surface px-1.5 py-0.5 rounded text-xs">node_modules/</code>).
           </p>
 
           {loading ? (
-            <div className="flex items-center gap-3 p-6 text-text-muted text-sm">
+            <div className="flex items-center gap-3 p-6 text - text-muted text-sm">
               <span className="h-4 w-4 border-2 border-brand-400/30 border-t-brand-400 rounded-full animate-spin" />
               Loading configuration...
             </div>
@@ -78,14 +78,14 @@ export default function SettingsPanel() {
               <textarea
                 value={ignoreRules}
                 onChange={(e) => setIgnoreRules(e.target.value)}
-                className="w-full bg-surface border border-border rounded-xl p-3 sm:p-4 min-h-[180px] sm:min-h-[220px] outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/30 font-mono text-sm transition-all resize-y placeholder:text-text-muted/50"
+                className="w-full bg-surface border border-border rounded-xl p-3 sm:p-4 min-h-[180px] sm:min-h-[220px] outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/30 font-mono text-sm transition-all resize-y placeholder:text - text-muted/50"
                 placeholder="# Add paths to ignore...
 node_modules/
 *.log
 dist/
 .env"
               />
-              
+
               <div className="flex justify-end">
                 <button
                   onClick={handleSave}
