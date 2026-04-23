@@ -7,7 +7,7 @@
 //! allowing different storage approaches:
 //!
 //! - **`SnapshotStrategy`** (MVP): Stores full file content for every version.
-//!   Simple, fast, and reliable — ideal for small-to-medium files.
+//!   Simple, fast, and reliable - ideal for small-to-medium files.
 //!
 //! - **`DeltaStrategy`** (Future): Would store only diffs between versions
 //!   using the `similar` crate. More space-efficient for large text files.

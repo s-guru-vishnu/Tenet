@@ -3,15 +3,15 @@
 //! Defines the command-line interface for TENET using the `clap` derive API.
 //!
 //! ## Commands
-//! - `tenet watch <directory>` — Start watching a directory for changes
-//! - `tenet history <file>` — Show version history for a file
-//! - `tenet restore <file@time>` — Restore a file to a previous version
-//! - `tenet status` — Show current tracking status and statistics
+//! - `tenet watch <directory>` - Start watching a directory for changes
+//! - `tenet history <file>` - Show version history for a file
+//! - `tenet restore <file@time>` - Restore a file to a previous version
+//! - `tenet status` - Show current tracking status and statistics
 
 use clap::{Parser, Subcommand};
 use std::path::PathBuf;
 
-/// TENET — Time-Travel File System
+/// TENET - Time-Travel File System
 ///
 /// Track file changes in real-time and restore any file to any
 /// previous version. Like having an undo button for your entire
@@ -20,7 +20,7 @@ use std::path::PathBuf;
 #[command(
     name = "tenet",
     version,
-    about = "⏳ TENET — Time-Travel File System",
+    about = "⏳ TENET - Time-Travel File System",
     long_about = "Track file changes in real-time and restore any file to any \
                    previous version.\nLike having an undo button for your entire filesystem.",
     author = "S Guru Vishnu"
@@ -145,7 +145,7 @@ pub async fn run_cli() -> anyhow::Result<()> {
         Commands::History { file, limit } => {
             let file_path = file.canonicalize().unwrap_or(file.to_path_buf());
             let tenet_dir = crate::utils::find_tenet_dir(&file_path)
-                .ok_or_else(|| anyhow::anyhow!("Not in a TENET-tracked directory."))?;
+                .ok_or_else(|| anyhow::anyhow!("Not in a TENEt - tracked directory."))?;
             let watched_dir = tenet_dir.parent().unwrap();
             let watched_dir_str = watched_dir.to_string_lossy().to_string();
             let metadata = crate::metadata::MetadataIndex::load(&tenet_dir, &watched_dir_str)?;
@@ -173,7 +173,7 @@ pub async fn run_cli() -> anyhow::Result<()> {
             
             let file_path = std::path::PathBuf::from(&file).canonicalize().unwrap_or_else(|_| std::path::PathBuf::from(&file));
             let tenet_dir = crate::utils::find_tenet_dir(&file_path)
-                .ok_or_else(|| anyhow::anyhow!("Not in a TENET-tracked directory."))?;
+                .ok_or_else(|| anyhow::anyhow!("Not in a TENEt - tracked directory."))?;
             let watched_dir = tenet_dir.parent().unwrap();
             let watched_dir_str = watched_dir.to_string_lossy().to_string();
             let metadata = crate::metadata::MetadataIndex::load(&tenet_dir, &watched_dir_str)?;
@@ -194,7 +194,7 @@ pub async fn run_cli() -> anyhow::Result<()> {
         Commands::Status => {
             let current_dir = std::env::current_dir()?;
             let tenet_dir = crate::utils::find_tenet_dir(&current_dir)
-                .ok_or_else(|| anyhow::anyhow!("Not in a TENET-tracked directory."))?;
+                .ok_or_else(|| anyhow::anyhow!("Not in a TENEt - tracked directory."))?;
             let watched_dir = tenet_dir.parent().unwrap();
             let watched_dir_str = watched_dir.to_string_lossy().to_string();
             let metadata = crate::metadata::MetadataIndex::load(&tenet_dir, &watched_dir_str)?;

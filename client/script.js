@@ -1,5 +1,5 @@
 // ============================================
-// TENET Landing Page — JavaScript
+// TENET Landing Page - JavaScript
 // ============================================
 
 // Navbar scroll effect
@@ -38,7 +38,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-document.querySelectorAll('.feature-card, .step, .tech-item, .download-card').forEach(el => {
+document.querySelectorAll('.feature-card, .download-card').forEach(el => {
   el.classList.add('fade-in');
   observer.observe(el);
 });
@@ -56,7 +56,7 @@ const downloadIconSVG = `<svg width="20" height="20" viewBox="0 0 24 24" fill="n
 // Fetch and render download buttons
 async function loadDownloads() {
   const container = document.getElementById('downloadButtons');
-  
+
   try {
     const res = await fetch('/api/downloads');
     if (!res.ok) throw new Error('API not available');
@@ -100,7 +100,7 @@ function renderButtons(downloads) {
       ${downloadIconSVG}
       <div>
         <div>${dl.label}</div>
-        <div class="btn-meta">${dl.name} — ${formatBytes(dl.size)}</div>
+        <div class="btn-meta">${dl.name} - ${formatBytes(dl.size)}</div>
       </div>
     `;
     container.appendChild(btn);
@@ -109,7 +109,7 @@ function renderButtons(downloads) {
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+  anchor.addEventListener('click', function (e) {
     e.preventDefault();
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {

@@ -357,10 +357,10 @@
           "markdownDescription": "Denies the version command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-listen`\n- `allow-unlisten`\n- `allow-emit`\n- `allow-emit-to`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-listen`\n- `allow-unlisten`\n- `allow-emit`\n- `allow-emit - to`",
           "type": "string",
           "const": "core:event:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-listen`\n- `allow-unlisten`\n- `allow-emit`\n- `allow-emit-to`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-listen`\n- `allow-unlisten`\n- `allow-emit`\n- `allow-emit - to`"
         },
         {
           "description": "Enables the emit command without any pre-configured scope.",
@@ -371,7 +371,7 @@
         {
           "description": "Enables the emit_to command without any pre-configured scope.",
           "type": "string",
-          "const": "core:event:allow-emit-to",
+          "const": "core:event:allow-emit - to",
           "markdownDescription": "Enables the emit_to command without any pre-configured scope."
         },
         {
@@ -395,7 +395,7 @@
         {
           "description": "Denies the emit_to command without any pre-configured scope.",
           "type": "string",
-          "const": "core:event:deny-emit-to",
+          "const": "core:event:deny-emit - to",
           "markdownDescription": "Denies the emit_to command without any pre-configured scope."
         },
         {
@@ -477,10 +477,10 @@
           "markdownDescription": "Denies the size command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-append`\n- `allow-prepend`\n- `allow-insert`\n- `allow-remove`\n- `allow-remove-at`\n- `allow-items`\n- `allow-get`\n- `allow-popup`\n- `allow-create-default`\n- `allow-set-as-app-menu`\n- `allow-set-as-window-menu`\n- `allow-text`\n- `allow-set-text`\n- `allow-is-enabled`\n- `allow-set-enabled`\n- `allow-set-accelerator`\n- `allow-set-as-windows-menu-for-nsapp`\n- `allow-set-as-help-menu-for-nsapp`\n- `allow-is-checked`\n- `allow-set-checked`\n- `allow-set-icon`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-append`\n- `allow-prepend`\n- `allow-insert`\n- `allow-remove`\n- `allow-remove-at`\n- `allow-items`\n- `allow-get`\n- `allow-popup`\n- `allow-create-default`\n- `allow-set-as-app-menu`\n- `allow-set-as-window-menu`\n- `allow-text`\n- `allow-set - text`\n- `allow-is-enabled`\n- `allow-set-enabled`\n- `allow-set-accelerator`\n- `allow-set-as-windows-menu-for-nsapp`\n- `allow-set-as-help-menu-for-nsapp`\n- `allow-is-checked`\n- `allow-set-checked`\n- `allow-set-icon`",
           "type": "string",
           "const": "core:menu:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-append`\n- `allow-prepend`\n- `allow-insert`\n- `allow-remove`\n- `allow-remove-at`\n- `allow-items`\n- `allow-get`\n- `allow-popup`\n- `allow-create-default`\n- `allow-set-as-app-menu`\n- `allow-set-as-window-menu`\n- `allow-text`\n- `allow-set-text`\n- `allow-is-enabled`\n- `allow-set-enabled`\n- `allow-set-accelerator`\n- `allow-set-as-windows-menu-for-nsapp`\n- `allow-set-as-help-menu-for-nsapp`\n- `allow-is-checked`\n- `allow-set-checked`\n- `allow-set-icon`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-append`\n- `allow-prepend`\n- `allow-insert`\n- `allow-remove`\n- `allow-remove-at`\n- `allow-items`\n- `allow-get`\n- `allow-popup`\n- `allow-create-default`\n- `allow-set-as-app-menu`\n- `allow-set-as-window-menu`\n- `allow-text`\n- `allow-set - text`\n- `allow-is-enabled`\n- `allow-set-enabled`\n- `allow-set-accelerator`\n- `allow-set-as-windows-menu-for-nsapp`\n- `allow-set-as-help-menu-for-nsapp`\n- `allow-is-checked`\n- `allow-set-checked`\n- `allow-set-icon`"
         },
         {
           "description": "Enables the append command without any pre-configured scope.",
@@ -605,7 +605,7 @@
         {
           "description": "Enables the set_text command without any pre-configured scope.",
           "type": "string",
-          "const": "core:menu:allow-set-text",
+          "const": "core:menu:allow-set - text",
           "markdownDescription": "Enables the set_text command without any pre-configured scope."
         },
         {
@@ -737,7 +737,7 @@
         {
           "description": "Denies the set_text command without any pre-configured scope.",
           "type": "string",
-          "const": "core:menu:deny-set-text",
+          "const": "core:menu:deny-set - text",
           "markdownDescription": "Denies the set_text command without any pre-configured scope."
         },
         {
@@ -867,10 +867,10 @@
           "markdownDescription": "Denies the close command without any pre-configured scope."
         },
         {
-          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-get-by-id`\n- `allow-remove-by-id`\n- `allow-set-icon`\n- `allow-set-menu`\n- `allow-set-tooltip`\n- `allow-set-title`\n- `allow-set-visible`\n- `allow-set-temp-dir-path`\n- `allow-set-icon-as-template`\n- `allow-set-show-menu-on-left-click`",
+          "description": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-get-by-id`\n- `allow-remove-by-id`\n- `allow-set-icon`\n- `allow-set-menu`\n- `allow-set - tooltip`\n- `allow-set - title`\n- `allow-set-visible`\n- `allow-set - temp-dir-path`\n- `allow-set-icon-as-template`\n- `allow-set-show-menu-on-left-click`",
           "type": "string",
           "const": "core:tray:default",
-          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-get-by-id`\n- `allow-remove-by-id`\n- `allow-set-icon`\n- `allow-set-menu`\n- `allow-set-tooltip`\n- `allow-set-title`\n- `allow-set-visible`\n- `allow-set-temp-dir-path`\n- `allow-set-icon-as-template`\n- `allow-set-show-menu-on-left-click`"
+          "markdownDescription": "Default permissions for the plugin, which enables all commands.\n#### This default permission set includes:\n\n- `allow-new`\n- `allow-get-by-id`\n- `allow-remove-by-id`\n- `allow-set-icon`\n- `allow-set-menu`\n- `allow-set - tooltip`\n- `allow-set - title`\n- `allow-set-visible`\n- `allow-set - temp-dir-path`\n- `allow-set-icon-as-template`\n- `allow-set-show-menu-on-left-click`"
         },
         {
           "description": "Enables the get_by_id command without any pre-configured scope.",
@@ -917,19 +917,19 @@
         {
           "description": "Enables the set_temp_dir_path command without any pre-configured scope.",
           "type": "string",
-          "const": "core:tray:allow-set-temp-dir-path",
+          "const": "core:tray:allow-set - temp-dir-path",
           "markdownDescription": "Enables the set_temp_dir_path command without any pre-configured scope."
         },
         {
           "description": "Enables the set_title command without any pre-configured scope.",
           "type": "string",
-          "const": "core:tray:allow-set-title",
+          "const": "core:tray:allow-set - title",
           "markdownDescription": "Enables the set_title command without any pre-configured scope."
         },
         {
           "description": "Enables the set_tooltip command without any pre-configured scope.",
           "type": "string",
-          "const": "core:tray:allow-set-tooltip",
+          "const": "core:tray:allow-set - tooltip",
           "markdownDescription": "Enables the set_tooltip command without any pre-configured scope."
         },
         {
@@ -983,19 +983,19 @@
         {
           "description": "Denies the set_temp_dir_path command without any pre-configured scope.",
           "type": "string",
-          "const": "core:tray:deny-set-temp-dir-path",
+          "const": "core:tray:deny-set - temp-dir-path",
           "markdownDescription": "Denies the set_temp_dir_path command without any pre-configured scope."
         },
         {
           "description": "Denies the set_title command without any pre-configured scope.",
           "type": "string",
-          "const": "core:tray:deny-set-title",
+          "const": "core:tray:deny-set - title",
           "markdownDescription": "Denies the set_title command without any pre-configured scope."
         },
         {
           "description": "Denies the set_tooltip command without any pre-configured scope.",
           "type": "string",
-          "const": "core:tray:deny-set-tooltip",
+          "const": "core:tray:deny-set - tooltip",
           "markdownDescription": "Denies the set_tooltip command without any pre-configured scope."
         },
         {
@@ -1619,19 +1619,19 @@
         {
           "description": "Enables the set_theme command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:allow-set-theme",
+          "const": "core:window:allow-set - theme",
           "markdownDescription": "Enables the set_theme command without any pre-configured scope."
         },
         {
           "description": "Enables the set_title command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:allow-set-title",
+          "const": "core:window:allow-set - title",
           "markdownDescription": "Enables the set_title command without any pre-configured scope."
         },
         {
           "description": "Enables the set_title_bar_style command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:allow-set-title-bar-style",
+          "const": "core:window:allow-set - title-bar-style",
           "markdownDescription": "Enables the set_title_bar_style command without any pre-configured scope."
         },
         {
@@ -2075,19 +2075,19 @@
         {
           "description": "Denies the set_theme command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:deny-set-theme",
+          "const": "core:window:deny-set - theme",
           "markdownDescription": "Denies the set_theme command without any pre-configured scope."
         },
         {
           "description": "Denies the set_title command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:deny-set-title",
+          "const": "core:window:deny-set - title",
           "markdownDescription": "Denies the set_title command without any pre-configured scope."
         },
         {
           "description": "Denies the set_title_bar_style command without any pre-configured scope.",
           "type": "string",
-          "const": "core:window:deny-set-title-bar-style",
+          "const": "core:window:deny-set - title-bar-style",
           "markdownDescription": "Denies the set_title_bar_style command without any pre-configured scope."
         },
         {
