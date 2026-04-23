@@ -35,6 +35,11 @@ src-tauri/target/
 .tenet/
 .env
 
+# Client & Server
+client/node_modules/
+server/node_modules/
+server/dist/
+
 # Scratch files
 scratch.rs
 scratch.exe
