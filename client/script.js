@@ -59,41 +59,52 @@ async function loadDownloads() {
   
   try {
     const res = await fetch('/api/downloads');
+    if (!res.ok) throw new Error('API not available');
     const data = await res.json();
 
     if (!data.downloads || data.downloads.length === 0) {
-      container.innerHTML = `
-        <div style="color: var(--text-muted); font-size: 14px;">
-          No builds available yet. Run <code style="background: var(--bg-elevated); padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono);">npx tauri build</code> first.
-        </div>
-      `;
-      return;
+      throw new Error('No downloads in API');
     }
 
-    container.innerHTML = '';
-
-    data.downloads.forEach((dl, i) => {
-      const btn = document.createElement('a');
-      btn.href = dl.url;
-      btn.className = `download-btn ${i === 0 ? 'primary' : 'secondary'}`;
-      btn.innerHTML = `
-        ${downloadIconSVG}
-        <div>
-          <div>${dl.label}</div>
-          <div class="btn-meta">${dl.name} — ${formatBytes(dl.size)}</div>
-        </div>
-      `;
-      container.appendChild(btn);
-    });
+    renderButtons(data.downloads);
 
   } catch (err) {
-    container.innerHTML = `
-      <div style="color: var(--text-muted); font-size: 14px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
-        <span>Could not connect to download server.</span>
-        <span style="font-size: 12px; opacity: 0.6;">Make sure the server is running on port 3000</span>
+    // FALLBACK: Use local files (for Netlify)
+    const localDownloads = [
+      {
+        name: 'tenet_0.1.0_x64_en-US.msi',
+        label: 'Windows Installer (MSI)',
+        size: 3657728,
+        url: './tenet_0.1.0_x64_en-US.msi'
+      },
+      {
+        name: 'tenet_0.1.0_x64-setup.exe',
+        label: 'Windows Setup (EXE)',
+        size: 2427997,
+        url: './tenet_0.1.0_x64-setup.exe'
+      }
+    ];
+    renderButtons(localDownloads);
+  }
+}
+
+function renderButtons(downloads) {
+  const container = document.getElementById('downloadButtons');
+  container.innerHTML = '';
+
+  downloads.forEach((dl, i) => {
+    const btn = document.createElement('a');
+    btn.href = dl.url;
+    btn.className = `download-btn ${i === 0 ? 'primary' : 'secondary'}`;
+    btn.innerHTML = `
+      ${downloadIconSVG}
+      <div>
+        <div>${dl.label}</div>
+        <div class="btn-meta">${dl.name} — ${formatBytes(dl.size)}</div>
       </div>
     `;
-  }
+    container.appendChild(btn);
+  });
 }
 
 // Smooth scroll for anchor links
