@@ -44,7 +44,15 @@ function DiffContainer({ filePath, hash, onClose }: { filePath: string, hash: st
       {loading ? (
         <div className="animate-pulse bg-surface h-32 rounded-xl"></div>
       ) : error ? (
-        <p className="text-red-400 text-sm">Failed to load content: {error}</p>
+        error.includes('not valid UTF-8') ? (
+          <div className="flex flex-col items-center justify-center py-8 text-text-muted bg-surface/30 rounded-xl border border-border">
+             <SplitSquareHorizontal size={24} className="mb-2 opacity-50" />
+             <p className="text-sm">Binary file</p>
+             <p className="text-xs opacity-60">Diffing is not supported for binary formats.</p>
+          </div>
+        ) : (
+          <p className="text-red-400 text-sm bg-red-400/10 p-3 rounded-lg border border-red-400/20">Failed to load content: {error}</p>
+        )
       ) : (
         <DiffViewer oldStr={oldStr} newStr={newStr} />
       )}

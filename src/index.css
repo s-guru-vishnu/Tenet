@@ -22,7 +22,7 @@
   }
 
   body {
-    @apply bg-background text - text-main font-sans antialiased;
+    @apply bg-background text-text-main font-sans antialiased;
     margin: 0;
     overflow-x: hidden;
   }
