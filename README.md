@@ -80,6 +80,58 @@ tenet status
 
 Displays tracked files, version counts, and storage usage.
 
+## 📦 Python SDK & npm CLI
+
+TENET provides wrappers for automation and scripting.
+
+### Python SDK (`tenet-sdk`)
+
+```bash
+pip install tenet-sdk
+```
+
+```python
+from tenet import Tenet
+
+t = Tenet()
+t.start() # Opens the GUI
+print(t.status())
+t.restore("src/main.rs", "1h")
+t.watch("./project")
+```
+
+### Node.js CLI (`tenet-cli`)
+
+```bash
+npm install -g tenet-cli
+```
+
+```bash
+tenet-cli watch ./my-project
+tenet-cli restore src/main.rs@1h
+```
+
+## 🚀 Deployment & Distribution
+
+To build TENET for distribution:
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Build the Tauri application:
+   ```bash
+   npm run tauri build
+   ```
+
+3. The installers will be available in:
+   - Windows: `src-tauri/target/release/bundle/msi/` & `src-tauri/target/release/bundle/nsis/`
+   - macOS: `src-tauri/target/release/bundle/dmg/`
+   - Linux: `src-tauri/target/release/bundle/appimage/`
+
+Upload the generated installers to your website or GitHub Releases.
+
 ## Commands
 
 | Command | Alias | Description |

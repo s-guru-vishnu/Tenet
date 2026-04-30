@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { motion } from 'framer-motion';
-import { Folder, FolderOpen, FileText, ChevronRight, ChevronDown, RefreshCw, Search } from 'lucide-react';
+import { Folder, FolderOpen, FileText, ChevronRight, ChevronDown, RefreshCw, Search, FileJson, FileCode, FileImage, FileArchive } from 'lucide-react';
 import { useAppStore } from '../store/useAppStore';
 
 type TreeNode = {
@@ -88,6 +88,39 @@ const TreeItem = ({ node, onSelectFile, level = 0, defaultOpen = false }: { node
     }
   };
 
+  const getFileIcon = (name: string) => {
+    const ext = name.split('.').pop()?.toLowerCase();
+    if (!ext || ext === name) return <FileText size={15} />;
+    
+    switch (ext) {
+      case 'json':
+      case 'lock':
+        return <FileJson size={15} className="text-yellow-400" />;
+      case 'ts':
+      case 'tsx':
+      case 'js':
+      case 'jsx':
+        return <FileCode size={15} className="text-blue-400" />;
+      case 'rs':
+        return <FileCode size={15} className="text-orange-400" />;
+      case 'png':
+      case 'jpg':
+      case 'svg':
+      case 'ico':
+        return <FileImage size={15} className="text-purple-400" />;
+      case 'zip':
+      case 'tar':
+      case 'gz':
+        return <FileArchive size={15} className="text-red-400" />;
+      case 'css':
+        return <FileCode size={15} className="text-pink-400" />;
+      case 'html':
+        return <FileCode size={15} className="text-orange-500" />;
+      default:
+        return <FileText size={15} />;
+    }
+  };
+
   return (
     <div className="select-none">
       <div
@@ -106,8 +139,8 @@ const TreeItem = ({ node, onSelectFile, level = 0, defaultOpen = false }: { node
             {isOpen ? <FolderOpen size={15} /> : <Folder size={15} />}
           </span>
         ) : (
-          <span className="flex items-center gap-1.5 ml-5 text-gray-400 shrink-0">
-            <FileText size={15} />
+          <span className="flex items-center gap-1.5 ml-5 shrink-0 opacity-80">
+            {getFileIcon(node.name)}
           </span>
         )}
         <span className="text-sm truncate">{node.name}</span>

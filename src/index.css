@@ -48,10 +48,60 @@
 
 @layer utilities {
   .glass-panel {
-    @apply bg-surface/80 backdrop-blur-md border border-border;
+    @apply bg-surface/70 backdrop-blur-xl border border-white/5 shadow-xl relative overflow-hidden transition-all duration-300;
+  }
+
+  .glass-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), transparent);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .glass-panel > * {
+    position: relative;
+    z-index: 1;
   }
 
   .flex-center {
-    @apply flex border items-center justify-center;
+    @apply flex items-center justify-center;
   }
+
+  .animate-gradient {
+    background-size: 200% auto;
+    animation: textGradient 4s linear infinite;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .timeline-line {
+    @apply absolute left-[-16px] sm:left-[-24px] top-6 bottom-[-24px] w-[2px] bg-gradient-to-b from-brand-500/50 to-transparent;
+  }
+}
+
+@keyframes textGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes slow-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+.status-dot-active {
+  animation: slow-pulse 2s infinite;
 }

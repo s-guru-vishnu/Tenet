@@ -8,6 +8,7 @@ import HistoryPage from './components/Timeline';
 import FileExplorer from './components/FileExplorer';
 import SettingsPanel from './components/SettingsPanel';
 import Notifications from './components/Notifications';
+import logoUrl from './assets/logo.png';
 
 function App() {
   const { currentPath, setCurrentPath, status, setStatus, setFileHistory, addNotification } = useAppStore();
@@ -105,12 +106,12 @@ function App() {
         {/* Logo area */}
         <div className="px-4 py-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 flex items-center justify-center rounded-xl bg-gradient - to-br from-brand-400 to-brand-600 shadow-lg shadow-brand-500/20 shrink-0">
-              <Clock className="text-white" size={20} />
+            <div className="h-10 w-10 flex items-center justify-center shrink-0">
+              <img src={logoUrl} alt="TENET Logo" className="w-full h-full object-contain" />
             </div>
             <div className={`${!sidebarOpen ? 'lg:hidden' : ''}`}>
-              <h1 className="text-lg font-bold tracking-tight leading-none">TENET</h1>
-              <p className="text-[10px] text - text-muted leading-none mt-0.5">Time-Travel FS</p>
+              <h1 className="text-lg font-bold tracking-tight leading-none bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-purple-400 to-brand-400 animate-gradient">TENET</h1>
+              <p className="text-[10px] text-text-muted leading-none mt-0.5 uppercase tracking-wider">Time-Travel FS</p>
             </div>
           </div>
           <button
@@ -157,10 +158,10 @@ function App() {
 
         {/* Sidebar footer with watched dir info */}
         {currentPath && (
-          <div className="px-4 py-3 border-t border-border">
-            <div className="flex items-center gap-2 text-xs text - text-muted">
-              <Eye size={12} className="text-emerald-400 shrink-0" />
-              <span className="truncate" title={currentPath}>
+          <div className="px-4 py-3 border-t border-border bg-surface/50">
+            <div className="flex items-center gap-2 text-xs text-text-muted">
+              <div className="h-2 w-2 rounded-full bg-emerald-400 status-dot-active shrink-0" />
+              <span className="truncate font-medium text-text-main" title={currentPath}>
                 {currentPath.split(/[/\\]/).pop()}
               </span>
             </div>
@@ -190,7 +191,8 @@ function App() {
         </div>
 
         {/* Header decoration */}
-        <div className="absolute top-0 left-0 w-full h-64 bg-brand-500/5 blur-[120px] pointer-events-none -z-10" />
+        <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-br from-brand-500/10 via-purple-500/5 to-transparent opacity-50 blur-[100px] pointer-events-none -z-10" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-400/5 rounded-full blur-[120px] pointer-events-none -z-10" />
 
         {activeTab === 'dashboard' && (
           <div className="flex-1 flex flex-col">
