@@ -40,6 +40,14 @@ client/node_modules/
 server/node_modules/
 server/dist/
 
+# SDK & CLI
+tenet-cli/node_modules/
+tenet-sdk/build/
+tenet-sdk/dist/
+tenet-sdk/*.egg-info/
+__pycache__/
+*.pyc
+
 # Scratch files
 scratch.rs
 scratch.exe

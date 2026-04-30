@@ -1,0 +1,24 @@
+{
+  "name": "tenet-cli",
+  "version": "0.1.0",
+  "description": "CLI wrapper for TENET - Time-Travel File System",
+  "main": "index.js",
+  "bin": {
+    "tenet-cli": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tenet",
+    "filesystem",
+    "versioning",
+    "cli"
+  ],
+  "author": "S Guru Vishnu",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0"
+  }
+}

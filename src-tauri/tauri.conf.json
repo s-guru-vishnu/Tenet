@@ -12,11 +12,13 @@
   "app": {
     "windows": [
       {
-        "title": "TENET Filesystem",
-        "width": 800,
-        "height": 600,
+        "title": "TENET — Time-Travel File System",
+        "width": 1200,
+        "height": 800,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "decorations": true,
+        "transparent": true
       }
     ],
     "security": {

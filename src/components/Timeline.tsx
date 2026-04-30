@@ -170,7 +170,8 @@ export default function HistoryPage() {
               </div>
             </div>
 
-            <div className="relative pl-4 sm:pl-6 border-l-2 border-border space-y-5 sm:space-y-6">
+            <div className="relative pl-4 sm:pl-6 border-l-2 border-transparent space-y-5 sm:space-y-6">
+              <div className="timeline-line"></div>
               {[...fileHistory.versions].reverse().map((version, idx) => {
                 const versionNum = fileHistory.versions.length - idx;
                 const isLatest = idx === 0;
@@ -186,7 +187,7 @@ export default function HistoryPage() {
                   >
                     <div className={`absolute -left-[25px] sm:-left-[33px] top-1.5 h-3.5 w-3.5 rounded-full border-[3px] border-[#0f1115] ${isLatest ? 'bg-emerald-400' : 'bg-brand-500'}`} />
 
-                    <div className="glass-panel p-3 sm:p-4 rounded-xl border border-border hover:border-brand-500/30 transition-colors group">
+                    <div className="glass-panel p-3 sm:p-4 rounded-xl hover:border-brand-500/30 transition-colors group">
                       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 sm:gap-4">
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2">

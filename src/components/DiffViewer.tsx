@@ -7,9 +7,85 @@ interface DiffViewerProps {
   newStr: string;
 }
 
+interface DiffLine {
+  leftNum: number | null;
+  rightNum: number | null;
+  leftContent: string | null;
+  rightContent: string | null;
+  type: 'common' | 'added' | 'removed' | 'modified';
+}
+
 export default function DiffViewer({ oldStr, newStr }: DiffViewerProps) {
-  const diffs = useMemo(() => {
-    return diffLines(oldStr, newStr);
+  const diffLinesData = useMemo(() => {
+    const changes = diffLines(oldStr, newStr);
+    const lines: DiffLine[] = [];
+    
+    let leftLineNum = 1;
+    let rightLineNum = 1;
+
+    // Process changes into a side-by-side format
+    for (let i = 0; i < changes.length; i++) {
+      const change = changes[i];
+      const nextChange = i + 1 < changes.length ? changes[i + 1] : null;
+
+      const changeLines = change.value.split('\n');
+      if (changeLines[changeLines.length - 1] === '') {
+        changeLines.pop(); // Remove trailing empty line from split
+      }
+
+      if (change.removed && nextChange?.added) {
+        // Modified lines (removed followed by added)
+        const nextLines = nextChange.value.split('\n');
+        if (nextLines[nextLines.length - 1] === '') nextLines.pop();
+
+        const maxLines = Math.max(changeLines.length, nextLines.length);
+        for (let j = 0; j < maxLines; j++) {
+          lines.push({
+            leftNum: j < changeLines.length ? leftLineNum++ : null,
+            rightNum: j < nextLines.length ? rightLineNum++ : null,
+            leftContent: j < changeLines.length ? changeLines[j] : null,
+            rightContent: j < nextLines.length ? nextLines[j] : null,
+            type: 'modified',
+          });
+        }
+        i++; // Skip the next change since we handled it
+      } else if (change.removed) {
+        // Only removed
+        for (const line of changeLines) {
+          lines.push({
+            leftNum: leftLineNum++,
+            rightNum: null,
+            leftContent: line,
+            rightContent: null,
+            type: 'removed',
+          });
+        }
+      } else if (change.added) {
+        // Only added
+        for (const line of changeLines) {
+          lines.push({
+            leftNum: null,
+            rightNum: rightLineNum++,
+            leftContent: null,
+            rightContent: line,
+            type: 'added',
+          });
+        }
+      } else {
+        // Common
+        for (const line of changeLines) {
+          lines.push({
+            leftNum: leftLineNum++,
+            rightNum: rightLineNum++,
+            leftContent: line,
+            rightContent: line,
+            type: 'common',
+          });
+        }
+      }
+    }
+    
+    return lines;
   }, [oldStr, newStr]);
 
   return (
@@ -18,58 +94,61 @@ export default function DiffViewer({ oldStr, newStr }: DiffViewerProps) {
       animate={{ opacity: 1, y: 0 }}
       className="font-mono text-[13px] bg-[#0A0C10] rounded-xl border border-border mt-4 max-h-[600px] overflow-hidden flex flex-col shadow-2xl shadow-brand-500/5 ring-1 ring-white/5"
     >
-      <div className="flex bg-surface/80 backdrop-blur px-4 py-3 border-b border-white/5 text - text-muted text-xs font-semibold tracking-wider">
-        <span className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-red-400/80"></div> Removed
-        </span>
-        <span className="mx-4 text-white/20">|</span>
-        <span className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-emerald-400/80"></div> Added
-        </span>
+      <div className="flex bg-surface/80 backdrop-blur border-b border-white/5 text-text-muted text-xs font-semibold tracking-wider">
+        <div className="flex-1 py-3 px-4 border-r border-white/5 flex items-center gap-2">
+           <div className="w-2 h-2 rounded-full bg-red-400/80"></div> Previous Version
+        </div>
+        <div className="flex-1 py-3 px-4 flex items-center gap-2">
+           <div className="w-2 h-2 rounded-full bg-emerald-400/80"></div> Current Version
+        </div>
       </div>
-      <div className="overflow-y-auto p-2 custom-scrollbar">
-        {diffs.map((part, index) => {
-          const isAdded = part.added;
-          const isRemoved = part.removed;
+      
+      <div className="overflow-y-auto custom-scrollbar flex-1">
+        <div className="flex min-w-max pb-2">
+          {/* Left Column (Old) */}
+          <div className="flex-1 border-r border-white/5">
+            {diffLinesData.map((line, i) => (
+              <div 
+                key={`left-${i}`} 
+                className={`flex h-[22px] items-center ${
+                  line.type === 'removed' || (line.type === 'modified' && line.leftContent !== null) 
+                    ? 'bg-red-500/10 text-red-300' 
+                    : line.type === 'added' ? 'bg-surface/30' : 'text-gray-300 hover:bg-white/5'
+                }`}
+              >
+                <div className="w-10 shrink-0 text-right pr-3 text-xs opacity-40 select-none">
+                  {line.leftNum || ''}
+                </div>
+                <div className="w-6 shrink-0 text-center opacity-50 select-none">
+                  {line.type === 'removed' || (line.type === 'modified' && line.leftContent !== null) ? '-' : ''}
+                </div>
+                <div className="whitespace-pre break-all pl-1">{line.leftContent || ' '}</div>
+              </div>
+            ))}
+          </div>
 
-          let bgColor = 'transparent';
-          let textColor = 'text-gray-300';
-          let prefix = ' ';
-
-          if (isAdded) {
-            bgColor = 'bg-emerald-500/10 border-l border-emerald-500';
-            textColor = 'text-emerald-300';
-            prefix = '+';
-          } else if (isRemoved) {
-            bgColor = 'bg-red-500/10 border-l border-red-500';
-            textColor = 'text-red-300';
-            prefix = '-';
-          } else {
-            bgColor = 'border-l border-transparent';
-          }
-
-          return (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.05 }}
-              key={index}
-              className={`${bgColor} ${textColor} my-[1px] rounded-r-md`}
-            >
-              {part.value.split('\n').map((line, i, arr) => {
-                if (i === arr.length - 1 && line === '') return null;
-                return (
-                  <div key={i} className="flex group hover:bg-white/5 transition-colors px-2 py-[2px]">
-                    <span className="select-none w-6 text-right mr-4 opacity-30 group-hover:opacity-80 transition-opacity">
-                      {prefix}
-                    </span>
-                    <span className="whitespace-pre break-words break-all">{line || ' '}</span>
-                  </div>
-                );
-              })}
-            </motion.div>
-          );
-        })}
+          {/* Right Column (New) */}
+          <div className="flex-1">
+            {diffLinesData.map((line, i) => (
+              <div 
+                key={`right-${i}`} 
+                className={`flex h-[22px] items-center ${
+                  line.type === 'added' || (line.type === 'modified' && line.rightContent !== null) 
+                    ? 'bg-emerald-500/10 text-emerald-300' 
+                    : line.type === 'removed' ? 'bg-surface/30' : 'text-gray-300 hover:bg-white/5'
+                }`}
+              >
+                <div className="w-10 shrink-0 text-right pr-3 text-xs opacity-40 select-none border-l border-white/5">
+                  {line.rightNum || ''}
+                </div>
+                <div className="w-6 shrink-0 text-center opacity-50 select-none">
+                  {line.type === 'added' || (line.type === 'modified' && line.rightContent !== null) ? '+' : ''}
+                </div>
+                <div className="whitespace-pre break-all pl-1">{line.rightContent || ' '}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </motion.div>
   );
