@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { open } from '@tauri-apps/plugin-dialog';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, FolderInput, HardDrive, History, FileText, Database, Settings, FolderTree, Menu, X, Eye, Zap, Shield } from 'lucide-react';
+import { Clock, FolderInput, HardDrive, History, FileText, Database, Settings, FolderTree, Menu, X, Eye, Zap, Shield, Cpu } from 'lucide-react';
 import { useAppStore, type FileEntry } from './store/useAppStore';
 import HistoryPage from './components/Timeline';
 import FileExplorer from './components/FileExplorer';
 import SettingsPanel from './components/SettingsPanel';
 import Notifications from './components/Notifications';
+import AIAssistant from './components/AIAssistant';
 import logoUrl from './assets/logo.png';
 
 function App() {
   const { currentPath, setCurrentPath, status, setStatus, setFileHistory, addNotification } = useAppStore();
   const [inputPath, setInputPath] = useState('');
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'explorer' | 'history' | 'settings'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'explorer' | 'history' | 'settings' | 'agent'>('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const navToFileHistory = async (path: string) => {
@@ -153,6 +154,15 @@ function App() {
             onClick={() => handleTabChange('settings')}
             disabled={!currentPath}
             tooltip={!currentPath ? 'Watch a directory first' : undefined}
+          />
+          <NavItem
+            icon={<Cpu size={18} />}
+            label="AI Agent"
+            active={activeTab === 'agent'}
+            onClick={() => handleTabChange('agent')}
+            disabled={!currentPath}
+            tooltip={!currentPath ? 'Watch a directory first' : undefined}
+            accent
           />
         </nav>
 
@@ -330,13 +340,15 @@ function App() {
         {activeTab === 'explorer' && <FileExplorer onSelectFile={navToFileHistory} />}
         {activeTab === 'history' && <HistoryPage />}
         {activeTab === 'settings' && <SettingsPanel />}
+        {activeTab === 'agent' && <AIAssistant />}
       </main>
     </div>
   );
 }
 
-function NavItem({ icon, label, active = false, onClick, disabled = false, tooltip }: {
-  icon: React.ReactNode, label: string, active?: boolean, onClick?: () => void, disabled?: boolean, tooltip?: string
+function NavItem({ icon, label, active = false, onClick, disabled = false, tooltip, accent = false }: {
+  icon: React.ReactNode, label: string, active?: boolean, onClick?: () => void,
+  disabled?: boolean, tooltip?: string, accent?: boolean
 }) {
   return (
     <button
@@ -345,10 +357,14 @@ function NavItem({ icon, label, active = false, onClick, disabled = false, toolt
       className={`
         w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all
         ${active
-          ? 'bg-brand-500/15 text-brand-400 font-medium shadow-sm shadow-brand-500/5'
+          ? accent
+            ? 'bg-purple-500/15 text-purple-400 font-medium shadow-sm shadow-purple-500/5'
+            : 'bg-brand-500/15 text-brand-400 font-medium shadow-sm shadow-brand-500/5'
           : disabled
-            ? 'text - text-muted/40 cursor-not-allowed'
-            : 'text - text-muted hover:bg-surface-hover hover:text - text-main'}
+            ? 'text-text-muted/40 cursor-not-allowed'
+            : accent
+              ? 'text-text-muted hover:bg-purple-500/10 hover:text-purple-300'
+              : 'text-text-muted hover:bg-surface-hover hover:text-text-main'}
       `}
     >
       {icon}
