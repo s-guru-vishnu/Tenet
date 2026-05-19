@@ -37,11 +37,11 @@ function buildTree(paths: string[]): TreeNode[] {
     }
   }
 
-  // Sort: folders first, then files
+  // Sort: folders first, then files (natural numeric order)
   const sortTree = (node: TreeNode) => {
     if (node.children) {
       node.children.sort((a, b) => {
-        if (a.type === b.type) return a.name.localeCompare(b.name);
+        if (a.type === b.type) return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
         return a.type === 'folder' ? -1 : 1;
       });
       node.children.forEach(sortTree);

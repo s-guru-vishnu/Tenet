@@ -249,7 +249,7 @@ pub fn create_initial_snapshot(
                 match strategy.store_version(&path, watched_dir, tenet_dir, metadata) {
                     Ok(_) => {
                         *count += 1;
-                        if *count % 50 == 0 {
+                        if (*count).is_multiple_of(50) {
                             let _ = metadata.save(tenet_dir);
                             println!("⏳ Snapshotted {} files...", *count);
                         }

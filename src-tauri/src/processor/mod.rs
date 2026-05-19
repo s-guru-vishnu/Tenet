@@ -100,9 +100,8 @@ impl IgnoreRules {
 
         for pattern in &self.patterns {
             // Check if pattern matches any path component
-            if pattern.starts_with('*') {
+            if let Some(suffix) = pattern.strip_prefix('*') {
                 // Wildcard pattern like "*.log"
-                let suffix = &pattern[1..];
                 if file_name.ends_with(suffix) {
                     return true;
                 }

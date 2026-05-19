@@ -1,4 +1,4 @@
-use anyhow::{Context, Result};
+use anyhow::Context;
 use serde::Serialize;
 use std::path::PathBuf;
 use tauri::command;
@@ -215,4 +215,116 @@ pub async fn save_ignore_rules(path: String, rules: String) -> ApiResult<()> {
 
     std::fs::write(&ignore_file, rules).context("Failed to write ignore file")?;
     Ok(())
+}
+
+// ─── AI Agent ────────────────────────────────────────────────────────────────
+
+/// Runs the TENET AI agent with a natural-language query.
+///
+/// The agent is backed by rig.rs (Groq / Llama) and has access to all
+/// four TENET tools: get_history, restore_version, list_files, diff_versions.
+///
+/// # Arguments
+/// * `query`   — Natural language command (e.g. "Restore main.rs from yesterday")
+/// * `path`    — Current watched directory path (so we can locate `.tenet/`)
+/// * `api_key` — Groq API key provided by the user in Settings
+#[command]
+pub async fn run_agent(query: String, path: String, api_key: String, provider: String) -> ApiResult<String> {
+    if api_key.trim().is_empty() {
+        return Err(anyhow::anyhow!(
+            "API key is not set. Please provide it in the chat interface."
+        )
+        .into());
+    }
+
+    let current_dir = PathBuf::from(&path);
+    let tenet_dir = utils::find_tenet_dir(&current_dir)
+        .context("Not in a TENET-tracked directory. Watch a directory first.")?;
+
+    let watched_dir = tenet_dir
+        .parent()
+        .context("Invalid .tenet directory structure")?
+        .to_path_buf();
+
+    let result = crate::agent::run_agent(&query, watched_dir, tenet_dir, &api_key, &provider)
+        .await
+        .map_err(|e| anyhow::anyhow!(e.to_string()))?;
+        
+    Ok(result)
+}
+
+/// Compares two stored versions of a file and returns a unified diff string.
+/// Used by the frontend Diff Viewer and the AI agent's diff_versions tool.
+#[command]
+pub async fn diff_versions(
+    file: String,
+    path: String,
+    v1: String,
+    v2: String,
+) -> ApiResult<String> {
+    let current_dir = PathBuf::from(&path);
+    let tenet_dir = utils::find_tenet_dir(&current_dir)
+        .context("Not in a TENET-tracked directory.")?;
+
+    let watched_dir = tenet_dir
+        .parent()
+        .context("Invalid .tenet directory structure")?;
+    let watched_dir_str = watched_dir.to_string_lossy().to_string();
+
+    let metadata = MetadataIndex::load(&tenet_dir, &watched_dir_str)?;
+    let entry = metadata
+        .get_history(&file)
+        .context(format!("No history found for '{file}'"))?;
+
+    let resolve = |v: &str| -> anyhow::Result<&crate::metadata::FileVersion> {
+        if v.eq_ignore_ascii_case("latest") {
+            entry.versions.last().context("No versions available")
+        } else {
+            let idx: usize = v.parse().context("Invalid version number")?;
+            if idx == 0 || idx > entry.versions.len() {
+                anyhow::bail!("Version {idx} out of range");
+            }
+            Ok(&entry.versions[idx - 1])
+        }
+    };
+
+    let ver1 = resolve(&v1)?;
+    let ver2 = resolve(&v2)?;
+
+    let c1 = crate::storage::read_blob(&tenet_dir, &ver1.hash)?;
+    let c2 = crate::storage::read_blob(&tenet_dir, &ver2.hash)?;
+
+    let text1 = String::from_utf8_lossy(&c1);
+    let text2 = String::from_utf8_lossy(&c2);
+
+    let lines1: Vec<&str> = text1.lines().collect();
+    let lines2: Vec<&str> = text2.lines().collect();
+
+    let mut out = String::new();
+    let max = lines1.len().max(lines2.len());
+    let mut changes = 0usize;
+
+    for i in 0..max {
+        match (lines1.get(i), lines2.get(i)) {
+            (Some(a), Some(b)) if a != b => {
+                out.push_str(&format!("- {a}\n+ {b}\n"));
+                changes += 1;
+            }
+            (None, Some(b)) => {
+                out.push_str(&format!("+ {b}\n"));
+                changes += 1;
+            }
+            (Some(a), None) => {
+                out.push_str(&format!("- {a}\n"));
+                changes += 1;
+            }
+            _ => {}
+        }
+    }
+
+    if changes == 0 {
+        out = "No differences found.".to_string();
+    }
+
+    Ok(out)
 }

@@ -1,8 +1,10 @@
+pub mod agent;
 pub mod api;
 pub mod cli;
 pub mod metadata;
 pub mod processor;
 pub mod storage;
+pub mod tools;
 pub mod utils;
 pub mod versioning;
 pub mod watcher;
@@ -24,6 +26,9 @@ pub fn run() {
             api::get_file_content,
             api::get_ignore_rules,
             api::save_ignore_rules,
+            // AI Agent
+            api::run_agent,
+            api::diff_versions,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

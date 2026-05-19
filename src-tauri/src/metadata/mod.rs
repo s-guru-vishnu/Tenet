@@ -198,12 +198,12 @@ impl MetadataIndex {
         timestamp: &DateTime<Utc>,
     ) -> Option<&FileVersion> {
         self.files.get(rel_path).and_then(|entry| {
-            // Find the last version whose timestamp is <= the target
+            // Find the last version whose timestamp (in seconds) is <= the target
             entry
                 .versions
                 .iter()
                 .rev()
-                .find(|v| v.timestamp <= *timestamp)
+                .find(|v| v.timestamp.timestamp() <= timestamp.timestamp())
         })
     }
 
